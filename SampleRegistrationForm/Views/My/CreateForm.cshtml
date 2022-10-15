@@ -1,0 +1,329 @@
+﻿@model SampleRegistrationForm.Core.Model.RegistrationModel
+@{
+    ViewData["Title"] = "UserPage";
+}
+
+@{
+    Layout = null;
+}
+<style>
+    label {
+        font-size: 17px;
+    }
+    span {
+        color: red;
+    }
+
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+    .btnRegister {
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        background: #0062cc;
+        color: #fff;
+        font-weight: 600;
+        width: 30%;
+        cursor: pointer;
+    }
+    .gradient-custom {
+        background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1))
+    }
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+@using (Html.BeginForm("CreateForm", "My", FormMethod.Post, new { @id = "signupform", autocomplete = "off" }))
+{
+    <section class="gradient-custom">
+        <div class="container py-5 ">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-5-strong card-registration" style="border-radius: 30px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Registration Form</h3>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+
+                                        <div class="form-outline">
+                                            @Html.HiddenFor(p=>p.UserId)
+                                            <label class="form-label" for="firstName">First Name<span>*</span></label>
+                                            @Html.TextBoxFor(p => p.FirstName,  new {@class="form-control form-control-md",@id="firstname" ,placeholder = "First Name"})
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <div class="form-outline">
+                                            <label class="form-label" for="lastName">Last Name<span>*</span></label>
+                                            @Html.TextBoxFor(p => p.LastName,  new { @class="form-control form-control-md",placeholder = "Last Name"})
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                        <div class="form-outline datepicker w-100">
+
+                                            <label for="address" class="form-label">Address<span>*</span></label>
+                                            @Html.TextBoxFor(m => m.UserAddress,new{  @class="form-control form-control-md",placeholder = "Address"})
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label>Gender<span>*</span></label>
+                                        <div class="container" id="genders">
+                                                @Html.RadioButtonFor(m => m.UserGender,"Male")Male
+                                        <span class="ps-5" style="color:black">@Html.RadioButtonFor(m => m.UserGender,"Female")Female</span>
+                                                <div>
+                                                @Html.RadioButtonFor(m => m.UserGender,"Others")Others
+                                                </div>
+                                        </div>
+                                        
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+
+                                            <label class="form-label" for="emailAddress">Email<span>*</span></label>
+                                            @Html.TextBoxFor(model => model.UserEmail, new { @class = "popinputbox form-control form-control-md", placeholder = "Email ID", type = "email"})
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+
+                                            <label class="form-label" for="phoneNumber">Phone Number<span>*</span></label>
+                                            <div class="form-group input-group">
+                                                <select class="custom-select" style="max-width: 120px;">
+                                                    <option selected="">+91</option>
+                                                    <option value="1">+61</option>
+                                                    <option value="2">+57</option>
+                                                    <option value="3">+47</option>
+                                                </select>
+                                                @Html.TextBoxFor(p => p.PhoneNo ,  new {maxlength = "10",   @class="form-control form-control-md" ,placeholder = "Number"})
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+
+                                            <label class="form-label" for="Password">Password<span>*</span></label>
+
+                                            @Html.PasswordFor(m => m.UserPassword,new{@class=" form-control form-control-md" ,id="password",placeholder = "password"})
+                                            <div><input type="checkbox" onclick="myFunction()">Show Password</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 mb-4 pb-2">
+
+                                        <div class="form-outline">
+
+                                            <label class="form-label" for="Re-type Password">Re-type Password<span>*</span></label>
+                                            @Html.PasswordFor(m => m.RetypePassword,new{@class=" form-control input-height-sm " ,id="confirm",onClick="return Validate()",placeholder = "Re-enter password"})
+                                            <div><input type="checkbox" onclick="myFunction1()">Show Password</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="form-label select-label"> Qualification<span>*</span></label>
+                                        <div class="col-sm-10">
+
+                                            @Html.DropDownListFor(m => m.UserQualification,new List<SelectListItem>
+                                        {
+                                        new SelectListItem{ Text="BE"},
+                                        new SelectListItem{ Text="ME"},
+                                        new SelectListItem{ Text="BTech"},
+                                        new SelectListItem{ Text="MTech"},
+                                        new SelectListItem{ Text="MBA"},
+                                        },"select course",new {@class="form-control input-height-sm "})
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 pt-2">
+                                    <button type="submit" class="btnRegister" >Save</button>
+                                </div>
+
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+    </section>
+}
+
+<script>
+     $().ready(function () {
+
+         $("#signupform").validate({
+             // in 'rules' user have to specify all the constraints for respective fields
+             rules: {
+
+                 FirstName: {
+                     required: true,
+                     lettersonly:true,
+                 },
+                 LastName: {
+                     required: true,
+                    lettersonly: true,
+                 },
+                 UserAddress: {
+                     required: true,
+                 },
+                 PhoneNo: {
+                   
+                    required: true,
+                    number: true,
+                    maxlength:10,
+                 },
+               
+                 UserPassword: {
+                     required: true,
+                  minlength:5,
+   
+                 },
+                 RetypePassword: {
+                     required: true,
+                     minlength: 5,
+                     equalTo: "#password" //for checking both passwords are same or not
+                 },
+                 UserEmail: {
+                     required: true,
+                     email: true
+                 },
+                
+                 UserQualification:
+                 {
+                     required: true,
+                 },
+                 UserGender:{
+                    required: true,
+                 }
+             },
+             // in 'messages' user have to specify message as per rules
+             messages: {
+
+                 UserAddress: {
+                     required: " Please enter a Address",
+                 },
+                 LastName: {
+                     required: " Please enter a LastName",
+                    lettersonly: "Only alphabets are valid"
+                 },
+                 FirstName: {
+                     required: " Please enter a FirstName",
+                    lettersonly: "Only alphabets are valid"
+                 },
+                 UserEmail: {
+                     required: " Please enter a EmailId",
+                 },
+                 PhoneNo: {
+                     required: " Please enter a Phone Number",
+                     maxlength: " Your number must not exceed 10 characters",
+                    
+                 },
+                 UserPassword: { 
+                     required: " Please enter a password",
+                     minlength: " Your password must be consist of at least 5 characters"
+                 },
+                 RetypePassword: {
+                     required: " Please enter a password",
+                     minlength: " Your password must be consist of at least 5 characters",
+                     equalTo: " Please enter the same password as above"
+                 },
+                
+                 UserQualification: {
+                     required: "please select a field"
+                 },
+                 UserGender:
+                 {
+                    required: "please select a option"
+                 }
+              
+            }, 
+            errorPlacement: function (error, element) {
+              
+                if(element.is(":radio")) {
+                    error.insertAfter(element.parents('#genders'));
+                }
+                else { // This is the default behavior
+                    error.insertAfter(element);
+                }
+            }
+            
+             
+         });
+
+       
+     });
+         function myFunction() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+    function myFunction1() {
+        var x = document.getElementById("confirm");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

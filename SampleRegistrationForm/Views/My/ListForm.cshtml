@@ -1,0 +1,89 @@
+﻿@model IEnumerable<SampleRegistrationForm.Core.Model.RegistrationModel>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a10c7f6efa.js" crossorigin="anonymous"></script>
+<section class="vh-100" style="background:linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))">
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-10">
+
+            <div class="card">
+                    <div class="card-header p-3" >
+                    <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>User List</h5>
+                </div>
+                <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+
+                    <table class="table mb-0">
+                        <thead>
+                            
+                        
+                            <tr>
+                                <th scope="col">FirstName</th>
+                                <th scope="col">LastName</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Qualification</th>
+                                <th scope="col">PhoneNo</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Actions</th>
+
+                            </tr>
+                        </thead>
+                            
+                                <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr class="fw-normal">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirstName)
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.DisplayFor(modelItem => item.UserGender)
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.DisplayFor(modelItem => item.UserQualification)
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.DisplayFor(modelItem =>item.PhoneNo)
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.DisplayFor(modelItem =>item.UserAddress)
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.ActionLink("", "EditForm", new { userid=item.UserId },new{@class="fa-solid fa-pen-to-square text-success ",title="Edit"}) |
+                                           
+@*                                            @Html.ActionLink("","",new {userid=item.UserId },onclick="deletedetail()"})
+                                        *@    <button style="background:white;border:none" onclick="return confirm ('Are you sure you want to delete this?')" >
+                                                @Html.ActionLink("","DeleteForm",new {userid=item.UserId },new{@class="fas fa-trash-alt text-danger",title="Delete"})
+                                                
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    }
+                                 
+                                </tbody>
+                            
+                        </table>
+
+                     
+                    </div>
+                    <div class="card-footer text-end p-3">
+
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("CreateForm", "My")'">Create New</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+   
+</script>
+
+
